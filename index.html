@@ -253,7 +253,7 @@ viewport.addEventListener("pointerdown",function(e){if(editing)return;var t=e.ta
  else if(chk){mode="tap";tapAct="check";tapId=chk.closest(".node").dataset.id}
  else if(ne){mode="node";dragId=ne.dataset.id;var n=model.nodes[dragId];w0=[n.x,n.y]}
  else{mode="pan";p0=[tx,ty];viewport.classList.add("grabbing")}});
-viewport.addEventListener("pointermove",function(e){if(!mode)return;var dx=e.clientX-s0[0],dy=e.clientY-s0[1];if(Math.abs(dx)+Math.abs(dy)>4)moved=true;
+viewport.addEventListener("pointermove",function(e){if(!mode)return;var dx=e.clientX-s0[0],dy=e.clientY-s0[1];if(Math.hypot(dx,dy)>9)moved=true;
  if(mode==="node"){if(!moved)return;var n=model.nodes[dragId];n.x=w0[0]+dx/k;n.y=w0[1]+dy/k;var el=nodeEls[dragId];if(el){el.style.left=n.x+"px";el.style.top=n.y+"px"}drawEdges()}
  else if(mode==="pan"){tx=p0[0]+dx;ty=p0[1]+dy;applyT()}});
 viewport.addEventListener("pointerup",function(e){viewport.classList.remove("grabbing");
