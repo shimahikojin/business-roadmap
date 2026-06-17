@@ -1,0 +1,5 @@
+# 実データ（個人・機密）は絶対に公開リポジトリへ入れない
+roadmap.json
+*.private.json
+*-private.json
+private/

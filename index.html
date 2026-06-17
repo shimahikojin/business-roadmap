@@ -26,27 +26,41 @@ main{flex:1;position:relative;min-height:0;overflow:hidden}
 #viewport.grabbing{cursor:grabbing}
 #edges{position:absolute;inset:0;z-index:0}
 #world{position:absolute;top:0;left:0;transform-origin:0 0;z-index:1}
-.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;background:#fff;border-radius:15px;padding:11px 16px;font-size:15px;font-weight:500;color:var(--txt);white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.13),0 10px 26px rgba(0,0,0,.11);cursor:grab;max-width:252px;transition:box-shadow .18s,opacity .18s}
+.node{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;background:#fff;border-radius:15px;padding:11px 15px;font-size:14.5px;font-weight:500;color:var(--txt);box-shadow:0 1px 3px rgba(0,0,0,.13),0 10px 26px rgba(0,0,0,.11);cursor:grab;width:max-content;max-width:212px;transition:box-shadow .18s,opacity .2s,transform .2s}
 .node:hover{box-shadow:0 2px 6px rgba(0,0,0,.16),0 16px 34px rgba(0,0,0,.14)}
 .node.sel{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--c,var(--accent)),0 12px 28px rgba(0,0,0,.16)}
+.node.dim{opacity:.26;filter:saturate(.6)}
 .node.next::before{content:"";position:absolute;inset:-4px;border-radius:18px;border:2.5px solid var(--c);animation:nx 1.5s ease-in-out infinite;pointer-events:none}
 @keyframes nx{0%,100%{opacity:.95;transform:scale(1)}50%{opacity:.25;transform:scale(1.07)}}
 .node.next{box-shadow:0 0 0 2px #fff,0 6px 18px rgba(0,0,0,.14),0 0 14px var(--c)}
-.ttl{overflow:hidden;text-overflow:ellipsis;max-width:188px;outline:none;line-height:1.3}
-.node.editing .ttl{overflow:visible;max-width:none;box-shadow:0 0 0 2px var(--accent);border-radius:5px;padding:0 3px;margin:0 -3px}
+.ttl{outline:none;line-height:1.34;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.node.editing .ttl{-webkit-line-clamp:unset;overflow:visible;box-shadow:0 0 0 2px var(--accent);border-radius:5px;padding:0 3px;margin:0 -3px}
 .node.root{background:#1D1D1F;color:#fff;font-weight:600;font-size:16.5px;padding:14px 24px;border-radius:26px;box-shadow:0 2px 6px rgba(0,0,0,.2),0 14px 32px rgba(0,0,0,.22)}
 .node.branch{font-size:15.5px}
 .node.branch .ttl{color:var(--c);font-weight:700}
 .bdot{width:11px;height:11px;border-radius:50%;background:var(--c);flex:none}
 .frac{font-size:13px;color:var(--sec);font-weight:600;font-variant-numeric:tabular-nums}
 .check{width:24px;height:24px;border-radius:50%;border:2.5px solid #C7C7CC;position:relative;flex:none;cursor:pointer;transition:background .15s,border-color .15s}
+.check::before{content:"";position:absolute;inset:-11px;border-radius:50%}
 .check:hover{border-color:var(--c)}
+.check:active{transform:scale(.9)}
 .check.on{background:var(--c);border-color:var(--c)}
 .check.on::after{content:"";position:absolute;left:7.5px;top:3px;width:4.5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
 .node.leaf.done{opacity:.5}
 .node.leaf.done .ttl{text-decoration:line-through;color:var(--ter)}
-.due{font-size:12.5px;color:var(--sec);background:#F2F2F7;border-radius:8px;padding:2.5px 9px;font-weight:600;font-variant-numeric:tabular-nums}
-.due.over{color:var(--red);background:rgba(255,59,48,.1)}
+.node.leaf.wait .check{border-color:#E0A52E;border-style:dashed;background:#FFF8EC}
+.waitpill{font-size:11.5px;color:#9A6300;background:#FFF1D6;border-radius:7px;padding:2.5px 8px;font-weight:600;flex:none}
+.due{font-size:12px;color:var(--sec);background:#F2F2F7;border-radius:8px;padding:2.5px 8px;font-weight:600;font-variant-numeric:tabular-nums;flex:none}
+.due.over{color:var(--red);background:rgba(255,59,48,.12)}
+.due.soon{color:#9A6300;background:#FFF1D6}
+.tb.on{background:var(--accent);color:#fff}
+.tb.on:hover{background:#0077ed}
+.legend{position:absolute;left:14px;bottom:14px;z-index:5;display:flex;gap:7px;flex-wrap:wrap;pointer-events:none}
+.lg{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--sec);background:rgba(255,255,255,.82);backdrop-filter:blur(8px);border:1px solid var(--sep);border-radius:20px;padding:3px 9px;font-weight:500}
+.lg i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.lg.next i{background:#0071e3;box-shadow:0 0 0 2px rgba(0,113,227,.25)}
+.lg.wait i{background:#FFF8EC;border:1.5px dashed #E0A52E}
+.lg.over i{background:var(--red)}
 .ndot{width:6px;height:6px;border-radius:50%;background:#FF9F0A;flex:none}
 .collapse{width:21px;height:21px;border-radius:50%;background:#fff;border:1px solid var(--sep);color:var(--sec);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.1);flex:none}
 .collapse:hover{color:var(--txt)}
@@ -55,7 +69,7 @@ main{flex:1;position:relative;min-height:0;overflow:hidden}
 .zoom button:hover{background:rgba(0,0,0,.06)}
 .zoom button:active{background:rgba(0,0,0,.1)}
 .zoom .sep{height:1px;background:var(--sep)}
-.hint{position:absolute;left:16px;bottom:18px;font-size:11.5px;color:var(--ter);z-index:5;pointer-events:none;max-width:60%;line-height:1.5}
+.hint{position:absolute;left:16px;bottom:46px;font-size:11.5px;color:var(--ter);z-index:5;pointer-events:none;max-width:62%;line-height:1.5}
 .menu{position:absolute;top:50px;right:14px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border:1px solid var(--sep);border-radius:13px;box-shadow:0 10px 36px rgba(0,0,0,.2);padding:6px;min-width:196px;z-index:30;display:none}
 .menu.open{display:block}
 .menu button{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:none;background:transparent;padding:9px 11px;border-radius:9px;font-size:13.5px;color:var(--txt);cursor:pointer}
@@ -81,6 +95,7 @@ main{flex:1;position:relative;min-height:0;overflow:hidden}
 .switch .track{position:absolute;inset:0;background:#E9E9EA;border-radius:16px;transition:background .25s}
 .switch .knob{position:absolute;top:2px;left:2px;width:27px;height:27px;background:#fff;border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,.25);transition:transform .25s}
 .switch input:checked~.track{background:#34C759}
+.switch input:checked~.track.amber{background:#FF9F0A}
 .switch input:checked~.knob{transform:translateX(20px)}
 .swatches{display:flex;gap:0;flex-wrap:wrap;padding:12px 10px}
 .sw{width:30px;height:30px;border-radius:50%;cursor:pointer;margin:4px;position:relative}
@@ -99,6 +114,7 @@ main{flex:1;position:relative;min-height:0;overflow:hidden}
 <span class="app">事業ロードマップ</span>
 <span class="spacer"></span>
 <span class="prg"><svg class="ring" width="22" height="22"><circle cx="11" cy="11" r="8.5" fill="none" stroke="rgba(0,0,0,.1)" stroke-width="3"></circle><circle id="ringfg" cx="11" cy="11" r="8.5" fill="none" stroke="#34C759" stroke-width="3" stroke-linecap="round" stroke-dasharray="53.4" stroke-dashoffset="53.4"></circle></svg><span id="fractxt">0/0</span></span>
+<button class="tb" data-act="focus" id="focusBtn" title="次にやる＋期限超過だけを強調">🎯&nbsp;今やること</button>
 <button class="tb pri" data-act="add-child">＋&nbsp;追加</button>
 <button class="tb icon" data-act="menu" title="その他">⋯</button>
 </div>
@@ -114,12 +130,13 @@ main{flex:1;position:relative;min-height:0;overflow:hidden}
 </div>
 <main>
 <div id="viewport"><canvas id="edges"></canvas><div id="world"></div>
-<div class="hint">空白をドラッグで移動 ／ ピンチ・ホイールで拡大縮小<br>ノードをドラッグ→別ノードに重ねると枝を付け替え ／ ダブルクリックで改名</div>
+<div class="hint">ドラッグで移動 ／ ホイールで拡大 ／ ○をタップで完了 ／ ダブルクリックで改名</div>
+<div class="legend"><span class="lg next"><i></i>次にやる</span><span class="lg wait"><i></i>待ち（相手）</span><span class="lg over"><i></i>期限超過</span></div>
 <div class="zoom"><button data-act="zin">＋</button><div class="sep"></div><button data-act="zout">−</button><div class="sep"></div><button data-act="fit" title="全体表示"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4"/></svg></button></div>
 <div class="inspector" id="inspector">
 <div class="ihead"><input type="text" id="iTitle" placeholder="無題"><button class="xbtn" data-act="close">✕</button></div>
 <div class="ibody">
-<div id="iStatusSect"><div class="sect">状態</div><div class="card"><div class="row" id="iStatusRow"></div></div></div>
+<div id="iStatusSect"><div class="sect">状態</div><div class="card" id="iStatusCard"></div></div>
 <div class="sect">期限</div><div class="card"><div class="row"><input type="date" class="idate" id="iDue"></div></div>
 <div class="sect">テーマカラー</div><div class="card"><div class="swatches" id="iColors"></div></div>
 <div class="sect">メモ・詳細</div><div class="card"><textarea class="inotes" id="iNotes" placeholder="背景・担当・リンクなど"></textarea></div>
@@ -133,9 +150,11 @@ main{flex:1;position:relative;min-height:0;overflow:hidden}
 (function(){
 var TODAY="2026-06-17";
 var PAL=["#0071e3","#34C759","#FF375F","#FF9500","#AF52DE","#5AC8FA","#FF9F0A","#8E8E93"];
-var KEY="bm-model-v3";
+var KEY="bm-model-v4";
 function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function fmtDue(d){return d?(+d.slice(5,7))+"/"+(+d.slice(8,10)):""}
+function isOver(n){return n.due&&!n.done&&!n.wait&&n.due<TODAY}
+function relDue(n){if(!n.due)return null;var fmt=fmtDue(n.due);if(n.done)return{t:fmt,cls:""};var d=Math.round((new Date(n.due)-new Date(TODAY))/86400000);if(d<0)return{t:"超過"+(-d)+"日",cls:"over"};if(d===0)return{t:"今日",cls:"over"};if(d===1)return{t:"明日",cls:"soon"};if(d<=6)return{t:"あと"+d+"日",cls:"soon"};return{t:fmt,cls:""}}
 
 function layout(m){
  function kids(id){var r=[];for(var key in m.nodes)if(m.nodes[key].parent===id)r.push(m.nodes[key]);return r}
@@ -148,12 +167,12 @@ function defaultModel(){
  var nodes={},seq=0;
  nodes.root={id:"root",parent:null,title:"事業"};
  var brs=[
-  ["資金調達","#0071e3",[["事業計画書","2026-06-20",true],["VC 5社へ打診","2026-06-30",false],["調達ラウンド","2026-07-15",false]]],
-  ["ホテル連携","#34C759",[["候補3社リスト","2026-06-22",true],["条件ドラフト","2026-07-05",false],["MOU 締結","2026-07-30",false]]],
-  ["採用・組織","#FF375F",[["コアメンバー定義","2026-06-18",true],["採用ページ公開","2026-07-01",false],["業務委託2名","2026-07-12",false]]],
-  ["レジデンス構想","#FF9500",[["コンセプト設計","2026-06-25",false],["物件サーベイ","2026-07-10",false],["収支試算","2026-07-20",false]]]
+  ["💰 資金調達","#0071e3",[["事業計画書を作成","2026-06-12",true,false],["投資家へ打診","2026-07-10",false,false],["先方の検討","",false,true]]],
+  ["🤝 営業・提携","#34C759",[["候補リスト作成","2026-06-15",false,false],["条件すり合わせ","2026-07-04",false,false],["先方の社内承認","",false,true]]],
+  ["👥 採用・組織","#FF9500",[["募集要項を作成","2026-06-22",false,false],["面談を設定","2026-07-05",false,false],["内定承諾","",false,true]]],
+  ["🚀 プロダクト","#AF52DE",[["要件定義","2026-06-20",false,false],["試作をつくる","2026-07-15",false,false],["ユーザーテスト","2026-07-28",false,false]]]
  ];
- brs.forEach(function(b){seq++;var bid="n"+seq;nodes[bid]={id:bid,parent:"root",title:b[0],color:b[1]};b[2].forEach(function(t){seq++;var tid="n"+seq;nodes[tid]={id:tid,parent:bid,title:t[0],due:t[1],done:t[2]}})});
+ brs.forEach(function(b){seq++;var bid="n"+seq;nodes[bid]={id:bid,parent:"root",title:b[0],color:b[1]};b[2].forEach(function(t){seq++;var tid="n"+seq;nodes[tid]={id:tid,parent:bid,title:t[0],due:t[1],done:t[2],wait:t[3]}})});
  var m={nodes:nodes,rootId:"root",seq:seq};layout(m);return m;
 }
 var model;try{model=JSON.parse(localStorage.getItem(KEY)||"")}catch(e){}
@@ -168,8 +187,8 @@ function visibleNodes(){var out=[];(function rec(id){var n=model.nodes[id];if(!n
 
 var viewport=document.getElementById("viewport"),world=document.getElementById("world"),cv=document.getElementById("edges"),ctx=cv.getContext("2d");
 var inspector=document.getElementById("inspector"),menu=document.getElementById("menu");
-var selected=null,editing=false,nodeEls={},nextSet={};
-function computeNext(){nextSet={};for(var pid in model.nodes){var ch=childrenOf(pid);if(!ch.length)continue;for(var i=0;i<ch.length;i++){var c=ch[i],cc=childrenOf(c.id),done;if(cc.length){var st=leafStats(c.id);done=(st.total>0&&st.done===st.total)}else{done=c.done}if(!done){if(!cc.length&&!c.done)nextSet[c.id]=1;break}}}}
+var selected=null,editing=false,nodeEls={},nextSet={},focusMode=false;
+function computeNext(){nextSet={};for(var pid in model.nodes){var ch=childrenOf(pid);if(!ch.length)continue;for(var i=0;i<ch.length;i++){var c=ch[i],cc=childrenOf(c.id),settled;if(cc.length){var st=leafStats(c.id);settled=(st.total>0&&st.done===st.total)}else{settled=c.done||c.wait}if(settled)continue;if(!cc.length&&!c.done&&!c.wait)nextSet[c.id]=1;break}}}
 var tx=0,ty=0,k=1;
 function applyT(){world.style.transform="translate("+tx+"px,"+ty+"px) scale("+k+")";drawEdges()}
 function resizeCanvas(){var dpr=window.devicePixelRatio||1;cv.width=viewport.clientWidth*dpr;cv.height=viewport.clientHeight*dpr;cv.style.width=viewport.clientWidth+"px";cv.style.height=viewport.clientHeight+"px";drawEdges()}
@@ -184,14 +203,14 @@ function drawEdges(){var dpr=window.devicePixelRatio||1;ctx.setTransform(dpr,0,0
 function makeNodeEl(n){var div=document.createElement("div");var ch=childrenOf(n.id),col=colorOf(n.id),sel=(n.id===selected?" sel":"");
  div.dataset.id=n.id;div.style.left=n.x+"px";div.style.top=n.y+"px";div.style.setProperty("--c",col);
  var collapse=ch.length?'<span class="collapse">'+(n.collapsed?ch.length:"–")+"</span>":"";
- var due=n.due?'<span class="due'+((!n.done&&n.due<TODAY)?" over":"")+'">'+fmtDue(n.due)+"</span>":"";
+ var rd=relDue(n),due=rd?'<span class="due '+rd.cls+'">'+rd.t+"</span>":"";
  if(n.id===model.rootId){div.className="node root"+sel;div.innerHTML='<span class="ttl">'+esc(n.title)+"</span>"+collapse}
  else if(ch.length){var st=leafStats(n.id);div.className="node branch"+sel;div.innerHTML='<span class="bdot"></span><span class="ttl">'+esc(n.title)+'</span><span class="frac">'+st.done+"/"+st.total+"</span>"+due+collapse}
- else{div.className="node leaf"+(n.done?" done":"")+(nextSet[n.id]?" next":"")+sel;div.innerHTML='<span class="check'+(n.done?" on":"")+'"></span><span class="ttl">'+esc(n.title)+"</span>"+due+(n.notes?'<span class="ndot" title="メモあり"></span>':"")}
+ else{var wait=n.wait&&!n.done;var dim=focusMode&&!(nextSet[n.id]||isOver(n))?" dim":"";div.className="node leaf"+(n.done?" done":(wait?" wait":""))+(nextSet[n.id]?" next":"")+dim+sel;div.innerHTML='<span class="check'+(n.done?" on":"")+'"></span><span class="ttl">'+esc(n.title)+"</span>"+(wait?'<span class="waitpill">待ち</span>':"")+due+(n.notes?'<span class="ndot" title="メモあり"></span>':"")}
  nodeEls[n.id]=div;return div}
 function renderNodes(){Array.prototype.forEach.call(world.querySelectorAll(".node"),function(e){e.remove()});nodeEls={};visibleNodes().forEach(function(n){world.appendChild(makeNodeEl(n))})}
 function render(){computeNext();renderNodes();drawEdges();updateInspector();updateProgress()}
-function updateProgress(){var st=leafStats(model.rootId),f=st.total?st.done/st.total:0;document.getElementById("ringfg").setAttribute("stroke-dashoffset",53.4*(1-f));document.getElementById("fractxt").textContent=st.done+"/"+st.total}
+function updateProgress(){var st=leafStats(model.rootId),f=st.total?st.done/st.total:0;document.getElementById("ringfg").setAttribute("stroke-dashoffset",53.4*(1-f));var od=0;for(var key in model.nodes){var nn=model.nodes[key];if(nn.id!==model.rootId&&!childrenOf(key).length&&nn.due&&nn.due<TODAY&&!nn.done&&!nn.wait)od++}document.getElementById("fractxt").innerHTML=st.done+"/"+st.total+(od?' <span style="color:#FF3B30;font-weight:600">⏰'+od+"</span>":"")}
 
 function fit(){var vis=visibleNodes(),xs=vis.map(function(n){return n.x}),ys=vis.map(function(n){return n.y});var minX=Math.min.apply(0,xs),maxX=Math.max.apply(0,xs),minY=Math.min.apply(0,ys),maxY=Math.max.apply(0,ys);var w=(maxX-minX)+340,h=(maxY-minY)+260,vw=viewport.clientWidth,vh=viewport.clientHeight;k=Math.min(vw/w,vh/h);if(!isFinite(k)||k<=0)k=1;k=Math.max(.45,Math.min(1.15,k));tx=vw/2-(minX+maxX)/2*k;ty=vh/2-(minY+maxY)/2*k;applyT()}
 function zoomAt(sx,sy,f){var wx=(sx-tx)/k,wy=(sy-ty)/k,nk=Math.max(.25,Math.min(2.8,k*f));tx=sx-wx*nk;ty=sy-wy*nk;k=nk;applyT()}
@@ -206,14 +225,14 @@ function addChild(pid){if(!pid)pid=model.rootId;var p=model.nodes[pid];if(!p)ret
 function addSibling(id){if(!id||id===model.rootId)return;addChild(model.nodes[id].parent)}
 function del(id){if(!id||id===model.rootId)return;var rm=[];(function rec(i){rm.push(i);childrenOf(i).forEach(function(c){rec(c.id)})})(id);var par=model.nodes[id].parent;rm.forEach(function(i){delete model.nodes[i]});selected=par;save();render();ensureVisible(par)}
 
-var iTitle=document.getElementById("iTitle"),iDue=document.getElementById("iDue"),iNotes=document.getElementById("iNotes"),iColors=document.getElementById("iColors"),iStatusRow=document.getElementById("iStatusRow");
+var iTitle=document.getElementById("iTitle"),iDue=document.getElementById("iDue"),iNotes=document.getElementById("iNotes"),iColors=document.getElementById("iColors"),iStatusCard=document.getElementById("iStatusCard");
 PAL.forEach(function(c){var s=document.createElement("span");s.className="sw";s.style.background=c;s.dataset.c=c;iColors.appendChild(s)});
 function updateInspector(){var n=selected&&model.nodes[selected];if(!n){inspector.classList.remove("open");return}inspector.classList.add("open");
  iTitle.value=(n.title==="無題"?"":n.title);iDue.value=n.due||"";iDue.disabled=(n.id===model.rootId);iNotes.value=n.notes||"";
  var ch=childrenOf(n.id);
- if(n.id===model.rootId){iStatusRow.innerHTML='<label>中心（ルート）ノード</label>'}
- else if(ch.length){var st=leafStats(n.id);iStatusRow.innerHTML='<label>進捗</label><span class="frac">'+st.done+" / "+st.total+"</span>"}
- else{iStatusRow.innerHTML='<label>完了</label><span class="switch"><input type="checkbox" id="iDone"'+(n.done?" checked":"")+'><span class="track"></span><span class="knob"></span></span>';document.getElementById("iDone").onchange=function(){n.done=this.checked;save();render()}}
+ if(n.id===model.rootId){iStatusCard.innerHTML='<div class="row"><label>中心（ルート）ノード</label></div>'}
+ else if(ch.length){var st=leafStats(n.id);iStatusCard.innerHTML='<div class="row"><label>進捗</label><span class="frac">'+st.done+" / "+st.total+"</span></div>"}
+ else{iStatusCard.innerHTML='<div class="row"><label>完了</label><span class="switch"><input type="checkbox" id="iDone"'+(n.done?" checked":"")+'><span class="track"></span><span class="knob"></span></span></div><div class="row"><label>相手ボール（待ち）</label><span class="switch"><input type="checkbox" id="iWait"'+(n.wait?" checked":"")+'><span class="track amber"></span><span class="knob"></span></span></div>';document.getElementById("iDone").onchange=function(){n.done=this.checked;if(n.done)n.wait=false;save();render()};document.getElementById("iWait").onchange=function(){n.wait=this.checked;if(n.wait)n.done=false;save();render()}}
  Array.prototype.forEach.call(iColors.children,function(s){s.classList.toggle("on",s.dataset.c===(n.color||""))});
  var root=(n.id===model.rootId);document.getElementById("iSib").style.display=root?"none":"";document.getElementById("iDel").style.display=root?"none":"";
 }
@@ -229,6 +248,7 @@ function act(e){var b=e.target.closest("[data-act]");if(!b)return;var a=b.datase
  else if(a==="del")del(selected);
  else if(a==="close"){selected=null;render()}
  else if(a==="layout"){layout(model);save();render();fit()}
+ else if(a==="focus"){focusMode=!focusMode;document.getElementById("focusBtn").classList.toggle("on",focusMode);render()}
  else if(a==="fit")fit();
  else if(a==="zin")zoomAt(viewport.clientWidth/2,viewport.clientHeight/2,1.25);
  else if(a==="zout")zoomAt(viewport.clientWidth/2,viewport.clientHeight/2,.8);
