@@ -195,15 +195,16 @@ function updateProgress(){var st=leafStats(model.rootId),f=st.total?st.done/st.t
 
 function fit(){var vis=visibleNodes(),xs=vis.map(function(n){return n.x}),ys=vis.map(function(n){return n.y});var minX=Math.min.apply(0,xs),maxX=Math.max.apply(0,xs),minY=Math.min.apply(0,ys),maxY=Math.max.apply(0,ys);var w=(maxX-minX)+340,h=(maxY-minY)+260,vw=viewport.clientWidth,vh=viewport.clientHeight;k=Math.min(vw/w,vh/h);if(!isFinite(k)||k<=0)k=1;k=Math.max(.45,Math.min(1.15,k));tx=vw/2-(minX+maxX)/2*k;ty=vh/2-(minY+maxY)/2*k;applyT()}
 function zoomAt(sx,sy,f){var wx=(sx-tx)/k,wy=(sy-ty)/k,nk=Math.max(.25,Math.min(2.8,k*f));tx=sx-wx*nk;ty=sy-wy*nk;k=nk;applyT()}
+function ensureVisible(id){var n=model.nodes[id];if(!n)return;var pad=110,panel=inspector.classList.contains("open")?348:0;var sx=n.x*k+tx,sy=n.y*k+ty,L=pad,Rr=viewport.clientWidth-panel-pad,T=pad,B=viewport.clientHeight-pad,dx=0,dy=0;if(Rr<L)Rr=L;if(sx<L)dx=L-sx;else if(sx>Rr)dx=Rr-sx;if(sy<T)dy=T-sy;else if(sy>B)dy=B-sy;if(dx||dy){tx+=dx;ty+=dy;applyT()}}
 
-function select(id){selected=id;render()}
+function select(id){selected=id;render();ensureVisible(id)}
 function startEdit(id){var el=nodeEls[id];if(!el)return;var t=el.querySelector(".ttl");t.contentEditable=true;editing=true;el.classList.add("editing");t.focus();var r=document.createRange();r.selectNodeContents(t);var s=window.getSelection();s.removeAllRanges();s.addRange(r);
  function fin(){t.contentEditable=false;editing=false;el.classList.remove("editing");model.nodes[id].title=t.textContent.trim()||"無題";t.removeEventListener("blur",fin);t.removeEventListener("keydown",kd);save();render()}
  function kd(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();t.blur()}else if(e.key==="Escape"){e.preventDefault();t.blur()}}
  t.addEventListener("blur",fin);t.addEventListener("keydown",kd)}
-function addChild(pid){if(!pid)pid=model.rootId;var p=model.nodes[pid];if(!p)return;if(p.collapsed)p.collapsed=false;var sib=childrenOf(pid).length,id=genId();model.nodes[id]={id:id,parent:pid,title:"新しいタスク",due:"",done:false,x:(p.x||3000)+220,y:(p.y||2000)+(sib*66-33)};selected=id;save();render();startEdit(id)}
+function addChild(pid){if(!pid)pid=model.rootId;var p=model.nodes[pid];if(!p)return;if(p.collapsed)p.collapsed=false;var sib=childrenOf(pid).length,id=genId();model.nodes[id]={id:id,parent:pid,title:"新しいタスク",due:"",done:false,x:(p.x||3000)+220,y:(p.y||2000)+(sib*66-33)};selected=id;save();render();ensureVisible(id);startEdit(id)}
 function addSibling(id){if(!id||id===model.rootId)return;addChild(model.nodes[id].parent)}
-function del(id){if(!id||id===model.rootId)return;var rm=[];(function rec(i){rm.push(i);childrenOf(i).forEach(function(c){rec(c.id)})})(id);var par=model.nodes[id].parent;rm.forEach(function(i){delete model.nodes[i]});selected=par;save();render()}
+function del(id){if(!id||id===model.rootId)return;var rm=[];(function rec(i){rm.push(i);childrenOf(i).forEach(function(c){rec(c.id)})})(id);var par=model.nodes[id].parent;rm.forEach(function(i){delete model.nodes[i]});selected=par;save();render();ensureVisible(par)}
 
 var iTitle=document.getElementById("iTitle"),iDue=document.getElementById("iDue"),iNotes=document.getElementById("iNotes"),iColors=document.getElementById("iColors"),iStatusRow=document.getElementById("iStatusRow");
 PAL.forEach(function(c){var s=document.createElement("span");s.className="sw";s.style.background=c;s.dataset.c=c;iColors.appendChild(s)});
